@@ -46,4 +46,10 @@ if __name__ == '__main__':
 
     bert_obj = BERTModel()
     tokens = bert_obj.tokenize(sentences=sentence_list)
-    model = bert_obj.model_setup(tokens=tokens)
+    outputs = bert_obj.model_setup(tokens=tokens)
+
+    embeddings = outputs.last_hidden_state
+    attention_mask = tokens['attention_mask']
+
+    mask = attention_mask.unsqueeze(-1).expand(embeddings.size()).float()
+
