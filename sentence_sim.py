@@ -53,3 +53,11 @@ if __name__ == '__main__':
 
     mask = attention_mask.unsqueeze(-1).expand(embeddings.size()).float()
 
+    ##### Mask embedding #####
+    masked_embeddings = embeddings * mask
+    summed = torch.sum(masked_embeddings, 1)
+    summed_mask = torch.clamp(mask.sum(1), min=1e-9)
+    
+    ##### Mean pooling #####
+    mean_pooled = summed / summed_mask
+
