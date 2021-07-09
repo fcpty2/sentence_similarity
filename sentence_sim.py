@@ -1,5 +1,7 @@
 from transformers import AutoTokenizer, AutoModel
 import torch
+import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
 
 class BERTModel:
     def __init__(self):
@@ -61,3 +63,15 @@ if __name__ == '__main__':
     ##### Mean pooling #####
     mean_pooled = summed / summed_mask
 
+    ##### Cosine Similarity #####
+    mean_pooled = mean_pooled.detach().numpy()
+
+    sim_score = cosine_similarity(
+                [mean_pooled[0]],
+                mean_pooled[1:]
+            )
+    print(sim_score.flatten().tolist())
+
+    print(f"Sentence : {sentence_list[0]} \n")
+    pd.DataFrame({'Sentence': sentence_list[1:],
+                'SimilarityScore': sim_score.flatten()}).sort_values("SimilarityScore", ascending=False)
