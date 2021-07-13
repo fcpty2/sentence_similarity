@@ -73,5 +73,5 @@ if __name__ == '__main__':
     print(sim_score.flatten().tolist())
 
     print(f"Sentence : {sentence_list[0]} \n")
-    pd.DataFrame({'Sentence': sentence_list[1:],
-                'SimilarityScore': sim_score.flatten()}).sort_values("SimilarityScore", ascending=False)
+    print(pd.DataFrame({'Sentence': sentence_list[1:],
+                        'SimilarityScore': sim_score.flatten()}).sort_values("SimilarityScore", ascending=False))
